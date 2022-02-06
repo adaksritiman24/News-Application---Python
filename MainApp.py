@@ -1,14 +1,17 @@
 #This is a simple news App created using PyQt5
+from ast import Load
 import os
 from PyQt5 import QtGui
 from PyQt5 import QtCore
 from PyQt5.QtCore import QLine, QSize,Qt
-from PyQt5.QtWidgets import QApplication, QComboBox, QGridLayout, QHBoxLayout, QLabel, QLineEdit,  QWidget, QPushButton, QWidget
-QGridLayout, QLine
+from PyQt5.QtWidgets import QSplashScreen, QApplication, QComboBox, QGridLayout, QHBoxLayout, QLabel, QLineEdit,  QWidget, QPushButton, QWidget
+QGridLayout, QLine, 
 import sys
 import requests
+from threading import *
 
 from DisplayArea import DisplayArea
+from LoadingScreen import LoaderScreen
 
 BASE_DIR = os.getcwd()+"\\resources\\"
 print(BASE_DIR)
@@ -61,6 +64,8 @@ class Main(QWidget):
 
         #business is the initial feed ->This Is shown when the program is run. 
         self.fetchNews("business")
+
+        
 
     def createMenuOptions(self): #creating the side munubar for toggle
         self.menu = QWidget()
@@ -315,6 +320,9 @@ class Main(QWidget):
 
     def startFetching(self,URL, showNextPage=False):        
         filtered = []
+        self.loader = LoaderScreen()
+        self.loader.showLoading()
+        QApplication.processEvents()
         try: 
             print("Fetching....")
             self.setWindowTitle(self.title+"           Please Wait, fetching news....")
@@ -344,8 +352,9 @@ class Main(QWidget):
             #display error in Display Area
             self.displayArea.showError("Connection Failed!")
             self.page = 0
-            return None
-    
+            
+        self.loader.stopLoading()
+
     def showNext(self):    
         self.page+=1
         self.startFetching(self.URL+str(self.page), showNextPage=True)
@@ -354,7 +363,8 @@ class Main(QWidget):
 if __name__ == "__main__":
     #start application
     app = QApplication(sys.argv)
-
     window = Main()
     window.show()
+    print("------here")
+    
     sys.exit(app.exec_())         

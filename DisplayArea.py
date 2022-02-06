@@ -1,9 +1,10 @@
 from PyQt5.QtCore import QLine, QSize, Qt
-from PyQt5.QtGui import QIcon, QPixmap
-from PyQt5.QtWidgets import QGridLayout,QLabel, QScrollArea, QWidget, QPushButton,QWidget
+from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QGridLayout,QLabel, QScrollArea, QWidget, QPushButton,QWidget, QApplication
 QGridLayout, QLine
 import os
 from FullNews import FullNews
+from LoadingScreen import LoaderScreen
 
 BASE_DIR = os.getcwd()+"\\resources\\"
 class DisplayArea(QScrollArea):
@@ -154,6 +155,9 @@ class DisplayArea(QScrollArea):
         return newsPoster
 
     def showFullNews(self, image, title, content, url):
+        loader = LoaderScreen()
+        loader.showLoading()
+        QApplication.processEvents()
         current_news = {
             "image" : image,
             "title": title,
@@ -182,6 +186,7 @@ class DisplayArea(QScrollArea):
             self.grid.addWidget(fullNewsWidget,1,0,2,2)
         except Exception as exp:
             print("Connection Error!")
+        loader.stopLoading()    
             
 
     def backToPage(self):
