@@ -17,3 +17,6 @@ This is a news application created using PyQt5. News is fetched through API from
 
 ## Download the application from here:
 https://drive.google.com/file/d/1oAHeHzkOv_i83YFpV6CfZ5-9TYzlW8jG/view?usp=sharing
+
+## Latest Updated
+https://drive.google.com/file/d/1oYNcDKIPa220yK6dFrdwMUqDLbTcHevb/view?usp=sharing
